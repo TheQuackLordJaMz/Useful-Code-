@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class pController : MonoBehaviour
+{
+    //pController is PlayerController
+
+    private float pSpeed = 20.0f; //player speed
+    private float tSpeed = 45.0f; //turn speed of player/truck
+    private float hInput; // horizontal input for controlling truck left n right
+    private float forwardInput; //vertical input moving alonbg z axis forward and backwards
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        hInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
+
+        //we will move the truck forward based on vertical input
+        transform.Translate(Vector3.forward * Time.deltaTime * pSpeed * forwardInput); //move player forward along z axis 
+        //turn left and right  based on horizontal input
+        transform.Rotate(Vector3.up, tSpeed * hInput * Time.deltaTime);
+
+    }
+}
