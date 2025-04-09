@@ -1,3 +1,12 @@
+//move player left and right along x axis with input controls A,D OR Arrow keys
+//set movement bounds so it cant go off screen
+//fire bullet or pizza in this case 
+//die or reset
+//score points?
+
+
+public GameObject pizza;
+
 public float hInput; //ref for Horizontal input
 public float speed = 10f; //speed
 public float xRange = 10; //xRange is the x cords -10 for left and 10 for right
@@ -14,5 +23,12 @@ private void Update()
     if (transform.position.x > xRange) //dont go too far right
     {
         transform.position = new Vector3(xRange, transform.position.y, transform.position.z); //y,z pos dont change
+    }
+
+    //Fire the projectile when we press fire button (Spacebar)
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+        //Launch projectile/create the pizza prefab 
+        Instantiate(pizza, transform.position, pizza.transform.rotation); //position of pizza when created and its rotation (should be default or unchanged)
     }
 }
