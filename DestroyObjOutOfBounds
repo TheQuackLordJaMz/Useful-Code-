@@ -1,0 +1,14 @@
+ //destroy object when its out of bounds
+ float topBound = 30;
+ float lowerBound = -10;
+ private void Update()
+ {
+     if (transform.position.z > topBound)  //if obj z pos  goes too far out of bounds
+     {
+         Destroy(gameObject); //destroy obj(self)
+     }
+     else if (transform.position.z < lowerBound)  //if obj z pos  goes too far out of bounds
+     {
+         Destroy(gameObject); //destroy obj(self)
+     }
+ }
