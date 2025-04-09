@@ -1,0 +1,10 @@
+ //move the projectile forward
+ //have the projectile destroy objects it collides with
+ //a fire rate for the how much n often we can shoot
+ 
+ public float speed = 40.0f;
+ private void Update()
+ {
+     //move projectile forward along z axis
+     transform.Translate(Vector3.forward * speed * Time.deltaTime);
+ }
