@@ -4,21 +4,25 @@ public class SpawnManager : MonoBehaviour
     private float spawnRangeX = 20;              //our spawn range along the x axis
     private float spawnPosZ = 20;                //pos of where the prefabs will spawn
 
+    private float spawnDelay = 2;               //we wait few seconds before spawning objects/prefabs
+    private float spawnInterval = 1.5f;         //the rate at which they will spawn
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        InvokeRepeating("SpawnRandomAnimal", spawnDelay, spawnInterval); //spawn random animals every few seconds
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))  //if we press s key 
-        {
-            //spawn random animal prefabs at random pos along the x axis at top of screen 
-            int animalIndex = Random.Range(0, animalPrefabs.Length);         
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
-            Instantiate(animalPrefabs[animalIndex], spawnPos, animalPrefabs[animalIndex].transform.rotation);
-        }
+
+    }
+    void SpawnRandomAnimal()
+    {
+        //spawn random animal prefabs at random pos along the x axis at top of screen 
+        int animalIndex = Random.Range(0, animalPrefabs.Length);
+        Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
+        Instantiate(animalPrefabs[animalIndex], spawnPos, animalPrefabs[animalIndex].transform.rotation);
     }
 }
