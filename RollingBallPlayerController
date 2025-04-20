@@ -1,0 +1,19 @@
+public class PlayerController : MonoBehaviour
+{
+
+    [SerializeField]private float speed = 5.0f;
+    [SerializeField]private Rigidbody rb;
+    [SerializeField] private GameObject focalPoint;
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        focalPoint = GameObject.Find("FocalPoint");
+    }
+
+    
+    void Update()
+    {
+        float forwardInput = Input.GetAxis("Vertical");
+        rb.AddForce(focalPoint.transform.forward  * forwardInput * speed);
+    }
+}
