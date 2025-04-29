@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    [SerializeField]private float eSpeed = 2.5f;        //enemy speed
+    [SerializeField]private Rigidbody enemyRB;          //enemy Rigidbody ref
+    [SerializeField]private GameObject player;          //ref the player object
+    void Start()
+    {
+        enemyRB = GetComponent<Rigidbody>();            //get the rb 
+        player = GameObject.Find("Player");             //find the player game obj
+    }
+
+    
+    void Update()
+    {
+        //make enemy move towards the player at a set normalised speed
+        Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+        enemyRB.AddForce( lookDirection* eSpeed);
+    }
+}
