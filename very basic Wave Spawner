@@ -1,0 +1,27 @@
+public int enemyCount;
+public int waveNumber = 1;
+void Start()
+{
+    SpawnEnemyWave(waveNumber);        //call the spawnMultiple function and tell how many to spawn
+}
+
+
+//create multiple enemies 
+void SpawnEnemyWave(int enemiesToSpawn) 
+{
+    for (int i = 0; i < enemiesToSpawn; i++) //spawn no more than 3 enemies at a time
+    {
+        Instantiate(enemy, GenerateSpawnPosition(), enemy.transform.rotation);
+    }
+}
+
+void Update()
+{
+    //spawn a enemy after the enemies get destroyed ,enemy number will increase as the waves increase
+    enemyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length; //must have Enemy script logic set up alongside this for it to work 
+    if (enemyCount == 0) 
+    {
+        waveNumber++;
+        SpawnEnemyWave(waveNumber);
+    }
+}
