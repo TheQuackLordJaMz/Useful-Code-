@@ -1,0 +1,16 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class MainMenu : MonoBehaviour
+{
+    //Load up and Exit the game 
+    //options and level select and credits also will be added in future
+
+    public void PlayGame() 
+    {
+        SceneManager.LoadSceneAsync("Prototype 3"); 
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+}
