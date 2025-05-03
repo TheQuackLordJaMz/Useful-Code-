@@ -1,0 +1,1 @@
+ Camera.main.GetComponent<SimpleCameraShake>()?.TriggerShake();
