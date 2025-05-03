@@ -1,0 +1,34 @@
+using UnityEngine;
+
+public class SimpleCameraShake : MonoBehaviour
+{
+    //making the camera shake
+    public float shakeAmount = 0.1f; //how intense the shake is 
+    public float shakeDuration = 0.2f; //how long it shakes
+
+    private Vector3 originalPos; //cameras pos
+    private float shakeTimeRemaining = 0f; //how long left of the shake
+
+    void Start()
+    {
+        originalPos = transform.localPosition; //declare the cameras og pos
+    }
+
+    void Update()
+    {
+        if (shakeTimeRemaining > 0)
+        {
+            transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            shakeTimeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            transform.localPosition = originalPos;
+        }
+    }
+
+    public void TriggerShake()
+    {
+        shakeTimeRemaining = shakeDuration;
+    }
+}
