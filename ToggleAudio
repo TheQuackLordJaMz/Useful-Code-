@@ -1,0 +1,26 @@
+public class ToggleMusic : MonoBehaviour
+{
+    //Use with a toggle button in the ui
+    private void Start()
+    {
+       
+        AudioListener.volume = 1;
+    }
+    //Toggle music function
+    public void ToggleAudioOff(bool muted)
+    {
+
+
+        if (muted)
+        {
+            AudioListener.volume = 0;
+
+        }
+        else 
+        {
+            AudioListener.volume = 1;
+        }
+           
+    }
+   
+}
