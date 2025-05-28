@@ -1,27 +1,44 @@
-public int enemyCount;
-public int waveNumber = 1;
-void Start()
-{
-    SpawnEnemyWave(waveNumber);        //call the spawnMultiple function and tell how many to spawn
-}
+ [SerializeField] private GameObject enemy;                  //ref for the enemy gameobject we will spawn
+ [SerializeField] private GameObject powerUpPrefab;          //ref for the powerUp gameobject we will spawn
+ [SerializeField] private float spawnRange = 9;              //the range the enemy or other objects will spawn between 9 or -9 or what ever we decide
+ [SerializeField] private Vector3 spawnPos;                  //spawn position our enemy will be spawned at
+ [SerializeField] private int enemyCount;                    //how many enemies there is 
+ [SerializeField] private int waveNumber = 1;                //the wave number that will increase as enemies are killed
+ void Start()
+ {
+     SpawnEnemyWave(waveNumber);                             //call the spawnMultiple function and tell how many to spawn
+     Instantiate(powerUpPrefab, GenerateSpawnPosition(), enemy.transform.rotation);
+ }
 
 
-//create multiple enemies 
-void SpawnEnemyWave(int enemiesToSpawn) 
-{
-    for (int i = 0; i < enemiesToSpawn; i++) //spawn no more than 3 enemies at a time
-    {
-        Instantiate(enemy, GenerateSpawnPosition(), enemy.transform.rotation);
-    }
-}
+ //create multiple enemies 
+ void SpawnEnemyWave(int enemiesToSpawn) 
+ {
+     for (int i = 0; i < enemiesToSpawn; i++)                                            //spawn set amount  enemies at a time
+     {
+         Instantiate(enemy, GenerateSpawnPosition(), enemy.transform.rotation);          //spawn the enemy at a assigned location
+        
+     }
+ }
 
-void Update()
-{
-    //spawn a enemy after the enemies get destroyed ,enemy number will increase as the waves increase
-    enemyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length; //must have Enemy script logic set up alongside this for it to work 
-    if (enemyCount == 0) 
-    {
-        waveNumber++;
-        SpawnEnemyWave(waveNumber);
-    }
-}
+ void Update()
+ {
+     //spawn a enemy after the enemies get destroyed ,enemy number will increase as the waves increase
+     enemyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
+     if (enemyCount == 0) 
+     {
+         Instantiate(powerUpPrefab, GenerateSpawnPosition(), enemy.transform.rotation); //spawn power up next wave
+         waveNumber++;
+         SpawnEnemyWave(waveNumber);
+     }
+ }
+
+
+ //spawn enemy at random positions
+ private Vector3 GenerateSpawnPosition() 
+ {
+     float spawnPosX = Random.Range(-spawnRange, spawnRange);
+     float spawnPosZ = Random.Range(-spawnRange, spawnRange); ;
+     Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
+     return randomPos; //return the random pos so we can use it when we call the GenSpawnPoint function
+ }
