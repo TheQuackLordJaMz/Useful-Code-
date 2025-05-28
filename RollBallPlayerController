@@ -1,5 +1,3 @@
-using UnityEngine;
-using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
@@ -8,7 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private GameObject focalPoint;          //the point we facing we will move in this direction
     [SerializeField]private bool hasPowerUp = false;        //variable to check if we have the power up
     [SerializeField]private float powerUpStrentgh = 15;     //strentgh of our power up attack
-
+    [SerializeField]private GameObject powerUpIndicator;   //ref the gameobject
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,8 +16,10 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        // Add force to player in direction of the focal point (and camera)
         float forwardInput = Input.GetAxis("Vertical");
         rb.AddForce(focalPoint.transform.forward  * forwardInput * speed);
+        powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0); //be same pos as the player 
     }
 
     //pick up the power up
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
             hasPowerUp = true;
             Destroy(other.gameObject);
             StartCoroutine(PowerUpCountdownRoutine()); //call the countdown
+            powerUpIndicator.gameObject.SetActive(true); //turn on the power up ring
         }
     }
 
@@ -38,7 +39,8 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(7); //wait for 7 seconds 
         hasPowerUp = false; //power up is disabled
-        Debug.Log("Power Up Has Ended");
+        powerUpIndicator.gameObject.SetActive(false); //turn off the power up ring
+        Debug.Log("Power Up Has Ended"); //tells us poweruUp is gone
     }
 
     //use the power up
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
         {
             Rigidbody enemyRB = collision.gameObject.GetComponent<Rigidbody>();                         //get the enemies rigidbody
             Vector3 awayFromPlayer = (collision.gameObject.transform.position - transform.position);    //move away from the player
-            Debug.Log("Collided with" + collision.gameObject.name + "With Powerup set to" + hasPowerUp);
+            Debug.Log("Collided with" + collision.gameObject.name + "With Powerup set to" + hasPowerUp); //message to tell us we are poweredn up
             enemyRB.AddForce(awayFromPlayer * powerUpStrentgh, ForceMode.Impulse);                      //enemy will be sent flying in opposite direction from player when player has power up
         }
     }
